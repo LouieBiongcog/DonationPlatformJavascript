@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Donation Platform</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      min-height: 100vh;
+      display: flex;
+    }
+    .content {
+      margin-top: 50px;
+    }
+    .sidebar {
+      width: 250px;
+      background: #333;
+      color: white;
+      height: 100vh;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      transition: transform 0.3s ease;
+    }
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 15px 0;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    .sidebar a:hover {
+      background: #444;
+    }
+    .main {
+      flex-grow: 1;
+      margin-left: 250px;
+      padding: 30px;
+      transition: margin-left 0.3s ease;
+    }
+    .main.full-width {
+      margin-left: 0;
+    }
+    .toggle-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    .card {
+      animation: fadeIn 1s ease;
+    }
+    .hidden {
+      display: none;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+ 
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+      }
+      .main {
+        margin-left: 0;
+      }
+      .toggle-btn {
+        left: 10px;
+        top: 10px;
+      }
+    }
+    .list-group-item {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .list-group-item.hidden {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    .edit-btn, .delete-btn {
+      transition: all 0.3s ease;
+    }
+
+    .edit-btn:hover, .delete-btn:hover {
+      transform: scale(1.1);
+    }
+
+   
+    .edit-btn {
+      background-color: #007bff;
+    }
+    .delete-btn {
+      background-color: #dc3545;
+    }
+
+    .edit-btn:active, .delete-btn:active {
+      transform: scale(0.95);
+    }
+
+   
+    @keyframes addDonation {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .donation-item {
+      animation: addDonation 0.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar" id="sidebar">
+    <div class="content">
+      <h2>Donation Platform</h2>
+      <a href="#" id="home-link">🏠 Home</a>
+      <a href="#" id="donations-link">💰 Donations</a>
+      <a href="#" id="settings-link">⚙️ Settings</a>
+      <a href="#" id="logout-link">🚪 Logout</a>
+    </div>
+  </div>
+
+  
+  <button class="toggle-btn" id="toggle-btn">☰</button>
+
+  
+  <div class="main" id="main">
+   
+<div id="home-page">
+    <div class="card shadow-sm p-4" style="max-width: 1400px; margin-left: auto; margin-right: auto;">
+      <h1 class="text-primary" style="text-align: center;">Welcome to the Donation Platform</h1>
+      <p class="text-muted" style="text-align: center;">
+        Your platform for managing and tracking donations efficiently. Use the menu to navigate through the site.
+      </p>
+  
+      
+      <section id="about" style="margin-top: 40px;">
+        <h2 class="text-info" style="text-align: center;">About Us</h2>
+        <p class="text-muted" style="text-align: center;">
+          Our platform connects generous donors with people in need. Whether you're donating for a cause you believe in or managing donations for an organization, we make the process simple, secure, and transparent.
+        </p>
+        <p class="text-muted" style="text-align: center;">
+          We believe in the power of giving and strive to create a community where every contribution, big or small, makes a meaningful impact.
+        </p>
+      </section>
+  
+      
+      <section id="features" style="margin-top: 40px;">
+        <h2 class="text-warning" style="text-align: center;">Features</h2>
+        <div class="row text-center" style="margin-top: 20px;">
+          <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+              <h4 class="text-success">Easy Donations</h4>
+              <p>Make quick and simple donations to causes that matter to you. It's fast, secure, and straightforward.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+              <h4 class="text-success">Track Your Impact</h4>
+              <p>Monitor your donations and see how they’re helping. Get updates on the projects you care about.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+              <h4 class="text-success">Community Support</h4>
+              <p>Join a vibrant community of people making a difference. Share your story and inspire others to give back.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      
+      <section id="cta" style="margin-top: 40px;">
+        <h2 class="text-primary" style="text-align: center;">Ready to Make a Difference?</h2>
+        <p class="text-muted" style="text-align: center;">
+          Start today and help support the causes you care about. Together, we can create positive change.
+        </p>
+        <div class="text-center">
+          <h2 style="color: blue;">Donate now!</h2>
+        </div>
+      </section>
+    </div>
+  </div>
+  
+
+    
+  <div id="donations-page" class="hidden">
+    <div class="card shadow-sm p-3" style="max-width: 1400px; margin-left: auto;">
+      <h1 class="text-success">Your Donations</h1>
+      <form id="donation-form" class="mb-4">
+        <div class="mb-3">
+          <label for="donor-name" class="form-label">Donor Name</label>
+          <input type="text" class="form-control" id="donor-name" placeholder="Enter Donor Name" required>
+        </div>
+        <div class="mb-3">
+          <label for="donation-amount" class="form-label">Amount</label>
+          <input type="number" class="form-control" id="donation-amount" placeholder="Enter Amount" required>
+        </div>
+        <div class="mb-3">
+          <label for="donation-description" class="form-label">Description (Optional)</label>
+          <textarea class="form-control" id="donation-description" placeholder="Enter description (optional)"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Add Donation</button>
+      </form>
+      <ul id="donation-list" class="list-group"></ul>
+    </div>
+  </div>
+
+   
+    <div id="settings-page" class="hidden">
+        <div class="card shadow-sm p-4" style="max-width: 1400px; margin-left: auto;">
+          <h1 class="text-warning">Settings</h1>
+          <form id="settings-form">
+            <div class="mb-3">
+              <label for="new-username" class="form-label">New Username</label>
+              <input type="text" id="new-username" class="form-control" placeholder="Enter new username">
+            </div>
+            <div class="mb-3">
+              <label for="new-password" class="form-label">New Password</label>
+              <input type="password" id="new-password" class="form-control" placeholder="Enter new password">
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const toggleBtn = document.getElementById("toggle-btn");
+    const main = document.getElementById("main");
+
+    const pages = {
+      home: document.getElementById("home-page"),
+      donations: document.getElementById("donations-page"),
+      settings: document.getElementById("settings-page"),
+    };
+
+    const links = {
+      home: document.getElementById("home-link"),
+      donations: document.getElementById("donations-link"),
+      settings: document.getElementById("settings-link"),
+      logout: document.getElementById("logout-link"),
+    };
+
+    const showPage = (page) => {
+      Object.values(pages).forEach((p) => p.classList.add("hidden"));
+      pages[page].classList.remove("hidden");
+    };
+
+    links.home.addEventListener("click", () => showPage("home"));
+    links.donations.addEventListener("click", () => showPage("donations"));
+    links.settings.addEventListener("click", () => showPage("settings"));
+
+    links.logout.addEventListener("click", () => {
+      alert("You have been logged out.");
+      window.location.href = "Form.html";
+    });
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("hidden");
+      main.classList.toggle("full-width");
+    });
+
+    const donationForm = document.getElementById("donation-form");
+    const donorNameInput = document.getElementById("donor-name");
+    const donationAmountInput = document.getElementById("donation-amount");
+    const donationDescriptionInput = document.getElementById("donation-description");
+    const donationList = document.getElementById("donation-list");
+
+    
+    window.addEventListener("load", () => {
+        const donations = JSON.parse(localStorage.getItem("donations")) || [];
+        donations.forEach(donation => {
+            createDonationItem(donation.donorName, donation.donationAmount, donation.donationDescription);
+        });
+    });
+
+    
+    const createDonationItem = (donorName, donationAmount, donationDescription) => {
+        const donationItem = document.createElement("li");
+        donationItem.classList.add("list-group-item");
+        
+        
+        const donorNameElement = document.createElement("span");
+        const donationAmountElement = document.createElement("span");
+        const donationDescriptionElement = document.createElement("span");
+
+        donorNameElement.innerHTML = `<strong>Donor:</strong> ${donorName}<br>`;
+        donationAmountElement.innerHTML = `<strong>Amount:</strong> ₱${donationAmount}<br>`;
+        donationDescriptionElement.innerHTML = donationDescription ? `<strong>Description:</strong> ${donationDescription}<br>` : '';
+        
+        
+        const editButton = document.createElement("button");
+        const deleteButton = document.createElement("button");
+
+        editButton.classList.add("btn", "btn-primary", "btn-sm", "float-end", "edit-btn");
+        editButton.innerHTML = "Edit";
+        deleteButton.classList.add("btn", "btn-danger", "btn-sm", "float-end", "me-2", "delete-btn");
+        deleteButton.innerHTML = "Delete";
+
+        
+        editButton.addEventListener("click", () => {
+            let newDonorName = prompt("Edit Donor Name:", donorName);
+            let newDonationAmount = prompt("Edit Donation Amount:", donationAmount);
+            let newDonationDescription = prompt("Edit Description:", donationDescription);
+
+            
+            while (isNaN(newDonationAmount) || newDonationAmount <= 0) {
+                newDonationAmount = prompt("Please enter a valid donation amount (numeric and greater than 0):", donationAmount);
+            }
+
+            
+            if (newDonorName && newDonationAmount) {
+                donorNameElement.innerHTML = `<strong>Donor:</strong> ${newDonorName}<br>`;
+                donationAmountElement.innerHTML = `<strong>Amount:</strong> ₱${newDonationAmount}<br>`;
+                donationDescriptionElement.innerHTML = newDonationDescription ? `<strong>Description:</strong> ${newDonationDescription}<br>` : '';
+                
+                
+                updateLocalStorage();
+            }
+        });
+
+        deleteButton.addEventListener("click", () => {
+            donationItem.remove();
+            updateLocalStorage(); 
+        });
+
+        
+        donationItem.appendChild(donorNameElement);
+        donationItem.appendChild(donationAmountElement);
+        donationItem.appendChild(donationDescriptionElement);
+        donationItem.appendChild(editButton);
+        donationItem.appendChild(deleteButton);
+
+        
+        donationList.appendChild(donationItem);
+    };
+
+    
+    donationForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const donorName = donorNameInput.value.trim();
+        const donationAmount = donationAmountInput.value.trim();
+        const donationDescription = donationDescriptionInput.value.trim();
+
+        if (donorName && donationAmount && !isNaN(donationAmount) && donationAmount > 0) {
+           
+            createDonationItem(donorName, donationAmount, donationDescription);
+            saveDonationToLocalStorage(donorName, donationAmount, donationDescription);
+
+            
+            donorNameInput.value = "";
+            donationAmountInput.value = "";
+            donationDescriptionInput.value = ""; 
+        } else {
+            alert("Please enter a valid donor name and donation amount (numeric and greater than 0).");
+        }
+    });
+
+    
+    const saveDonationToLocalStorage = (donorName, donationAmount, donationDescription) => {
+        const donations = JSON.parse(localStorage.getItem("donations")) || [];
+        donations.push({ donorName, donationAmount, donationDescription });
+        localStorage.setItem("donations", JSON.stringify(donations));
+    };
+
+    
+    const updateLocalStorage = () => {
+        const donations = [];
+        const donationItems = document.querySelectorAll(".list-group-item");
+        donationItems.forEach(item => {
+            const donorName = item.querySelector("span").innerText.split("\n")[0].replace("Donor:", "").trim();
+            const donationAmount = item.querySelectorAll("span")[1].innerText.split("\n")[0].replace("Amount:", "").trim();
+            const donationDescription = item.querySelectorAll("span")[2]?.innerText.split("\n")[0].replace("Description:", "").trim() || "";
+            donations.push({ donorName, donationAmount, donationDescription });
+        });
+        localStorage.setItem("donations", JSON.stringify(donations));
+    };
+
+    const settingsForm = document.getElementById("settings-form");
+
+    
+    window.addEventListener("load", () => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+        document.getElementById("new-username").value = storedUsername;
+    }
+    });
+
+    settingsForm.addEventListener("submit", (e) => {
+    e.preventDefault(); 
+
+    const newUsername = document.getElementById("new-username").value.trim();
+    const newPassword = document.getElementById("new-password").value.trim();
+
+    if (newUsername) {
+        
+        localStorage.setItem("username", newUsername);
+        alert("Username updated successfully!");
+    } else {
+        alert("Please enter a valid username.");
+    }
+
+    if (newPassword) {
+        
+        alert("Password updated successfully!");
+    }
+
+    
+    settingsForm.reset();
+    });
+  </script>
+</body>
+</html>
